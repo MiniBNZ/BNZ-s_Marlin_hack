@@ -31,7 +31,8 @@
 // G5 turns off the laser. 
 #define LASERON 1
 #define LASEROFF 0
-#define LASERPIN 4 //use the 3rd servo pin.
+#define LASERPIN 4 
+//use the 3rd servo pin.
 
 
 

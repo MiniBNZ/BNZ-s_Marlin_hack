@@ -557,6 +557,13 @@ void setup_photpin() {
   #endif
 }
 
+void setup_laserpin() {
+  #ifdef LASERPIN
+	pinMode(LASERPIN,OUTPUT);
+	OUT_WRITE(LASERPIN, LOW);
+  #endif
+}
+
 void setup_powerhold() {
   #if HAS_SUICIDE
     OUT_WRITE(SUICIDE_PIN, HIGH);
@@ -636,7 +643,7 @@ void setup() {
   setup_killpin();
   setup_filrunoutpin();
   setup_powerhold();
-
+  setup_laserpin();
   #if HAS_STEPPER_RESET
     disableStepperDrivers();
   #endif
@@ -3341,11 +3348,13 @@ inline void gcode_G92() {
 inline void gcode_M3orM4() 
 {
   laserpower = code_seen('S') ? constrain(code_value_short(), 0, 255) : 255; 
+	digitalWrite(4,1);
 //BNZ
 }
 
 inline void gcode_M5() { 
 laserpower = 0 ;
+digitalWrite(4,0);
 //BNZ
 }
 
