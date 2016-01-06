@@ -93,17 +93,17 @@
 #endif
 
 #if MB(RAMPS_13_EFF) || ENABLED(IS_RAMPS_EFB)
-  #define FAN_PIN           9 // (Sprinter config)
+  #define FAN_PIN           11 // (Sprinter config)
   #if MB(RAMPS_13_EFF)
     #define CONTROLLERFAN_PIN  -1 // Pin used for the fan to cool controller
   #endif
 #elif MB(RAMPS_13_EEF) || MB(RAMPS_13_SF)
-  #define FAN_PIN           8
+  #define FAN_PIN           11
 #else
-  #define FAN_PIN           4 // IO pin. Buffer needed
+  #define FAN_PIN           11 // IO pin. Buffer needed
 #endif
 
-#define PS_ON_PIN          12
+#define PS_ON_PIN          -1
 
 #if ENABLED(REPRAP_DISCOUNT_SMART_CONTROLLER) || ENABLED(G3D_PANEL)
   #define KILL_PIN         41
@@ -118,12 +118,12 @@
 #endif
 
 #if MB(RAMPS_13_SF) || ENABLED(IS_RAMPS_EFB)
-  #define HEATER_1_PIN      10
+  #define HEATER_1_PIN      -1
 #else
-  #define HEATER_1_PIN      10   // EXTRUDER 2 (FAN On Sprinter)
+  #define HEATER_1_PIN      -1   // EXTRUDER 2 (FAN On Sprinter)
 #endif
 
-#define HEATER_2_PIN       11
+#define HEATER_2_PIN       -1
 
 #define TEMP_0_PIN         14   // ANALOG NUMBERING
 #define TEMP_1_PIN         15   // ANALOG NUMBERING
