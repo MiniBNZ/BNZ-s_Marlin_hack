@@ -112,30 +112,30 @@
 #endif
 
 #if MB(RAMPS_13_EFF)
-  #define HEATER_0_PIN      8
+  #define HEATER_0_PIN     9
 #else
-  #define HEATER_0_PIN     10   // EXTRUDER 1
+  #define HEATER_0_PIN     9   // EXTRUDER 1
 #endif
 
 #if MB(RAMPS_13_SF) || ENABLED(IS_RAMPS_EFB)
-  #define HEATER_1_PIN     -1
+  #define HEATER_1_PIN      10
 #else
-  #define HEATER_1_PIN      9   // EXTRUDER 2 (FAN On Sprinter)
+  #define HEATER_1_PIN      10   // EXTRUDER 2 (FAN On Sprinter)
 #endif
 
-#define HEATER_2_PIN       -1
+#define HEATER_2_PIN       11
 
-#define TEMP_0_PIN         13   // ANALOG NUMBERING
+#define TEMP_0_PIN         14   // ANALOG NUMBERING
 #define TEMP_1_PIN         15   // ANALOG NUMBERING
 #define TEMP_2_PIN         -1   // ANALOG NUMBERING
 
 #if MB(RAMPS_13_EFF) || MB(RAMPS_13_EEF) || MB(RAMPS_13_SF)
-  #define HEATER_BED_PIN   -1    // NO BED
+  #define HEATER_BED_PIN    12    // NO BED
 #else
-  #define HEATER_BED_PIN    8    // BED
+  #define HEATER_BED_PIN    12    // BED
 #endif
 
-#define TEMP_BED_PIN         14   // ANALOG NUMBERING
+#define TEMP_BED_PIN         9   // ANALOG NUMBERING
 
 #if ENABLED(Z_PROBE_SLED)
   #define SLED_PIN           -1
