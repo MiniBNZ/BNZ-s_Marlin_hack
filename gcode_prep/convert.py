@@ -8,15 +8,6 @@ filename = sys.argv[-1]
 
 filein = open(filename,'r')
 fileout = open(filename+'OUT','w')
-print 'Files are open',
-print '\n',
-print '\n',
-print '\n',
-print '\n',
-print '\n',
-print '\n',
-print '\n',
-print '\n',
 
 for linein in filein:
 
@@ -31,14 +22,17 @@ for linein in filein:
 			for wordin in linein.split():
 				if wordin == 'G1':
 					print "\nM3\n",
+					fileout.write('\nM3\n')
 					needtostop = '1'
 
 				if wordin == 'G2':
 					print "\nM3\n",
+					fileout.write('\nM3\n')
 					needtostop = '1'
 
 				if wordin == 'G3':
 					print "\nM3\n",
+					fileout.write('\nM3\n')
 					needtostop = '1'
 
 				if wordin != 'M3':
@@ -46,10 +40,15 @@ for linein in filein:
 						if wordin != 'M5':
 							if wordin != 'M8':
 								if wordin != 'M9':
+									fileout.write(wordin+' ')
 									print wordin,
+
 
 	print ''
 	if needtostop == '1':
-#		fileout.write('M5\n')#
+		fileout.write('\nM5\n')
 		print 'M5\n',
 		needtostop = ''
+fileout.write("\nM5\n")
+fileout.close()
+filein.close()
