@@ -26,14 +26,8 @@
   #error Oops!  Make sure you have 'Arduino Mega' selected from the 'Tools -> Boards' menu.
 #endif
 
-// lines below are used to turn a laser on and off inplace of a spindle.
-// G3 G4 turn on the laser (external power controls for now)
-// G5 turns off the laser. 
-#define LASERON 1
-#define LASEROFF 0
-#define LASERPIN 4 
-//use the 3rd servo pin.
-
+#define LASERPIN 4 //use the 3rd servo pin.
+#define LASER_ADDRESS 0x12
 
 
 #define LARGE_FLASH true

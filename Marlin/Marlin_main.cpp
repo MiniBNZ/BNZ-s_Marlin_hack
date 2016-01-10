@@ -40,6 +40,7 @@
   #include "mesh_bed_leveling.h"
 #endif
 
+
 #include "ultralcd.h"
 #include "planner.h"
 #include "stepper.h"
@@ -60,6 +61,11 @@
   #include "Wire.h"
 #endif
 
+#ifdef LASER_ADDRESS
+  #include "Wire.h"
+
+#endif 
+
 #if HAS_SERVOS
   #include "servo.h"
 #endif
@@ -67,6 +73,7 @@
 #if HAS_DIGIPOTSS
   #include <SPI.h>
 #endif
+
 
 /**
  * Look here for descriptions of G-codes:
@@ -3345,19 +3352,57 @@ inline void gcode_G92() {
 /**
  * M3 or M4 spindle conntrol to enable laser
  */
-inline void gcode_M3orM4() 
+inline void gcode_M3orM4()
 {
-  laserpower = code_seen('S') ? constrain(code_value_short(), 0, 255) : 255; 
-	digitalWrite(4,1);
+
+#ifdef LASER_ADDRESS
+  laserpower = code_seen('S') ? constrain(code_value_short(), 0, 255) : 255;
+  Wire.begin();
+  Wire.beginTransmission(LASER_ADDRESS);
+  Wire.write('L');      // Attention char for laser comms
+  Wire.write('1');      // diode number to adjust
+  Wire.write(laserpower);
+  Wire.write('L');      // Attention char for laser comms
+  Wire.write('2');      // diode number to adjust
+  Wire.write(laserpower);
+  Wire.write('L');      // Attention char for laser comms
+  Wire.write('3');      // diode number to adjust
+  Wire.write(laserpower);
+  Wire.write('L');      // Attention char for laser comms
+  Wire.write('4');      // diode number to adjust
+  Wire.write(laserpower);
+  
+  Wire.endTransmission();
+#endif
+
+        digitalWrite(4,1);
 //BNZ
 }
+// hopefully this is an unbeffered command
+inline void gcode_M5() {
+digitalWrite(4,0);      // rapid control to stop the laser promptly
 
-inline void gcode_M5() { 
-laserpower = 0 ;
-digitalWrite(4,0);
+#ifdef LASER_ADDRESS
+  Wire.begin();
+  Wire.beginTransmission(LASER_ADDRESS);
+//  Wire.write('L');      // Attention char for laser comms
+//  Wire.write('1');      // diode number to adjust
+  Wire.write(0);
+//  Wire.write('L');      // Attention char for laser comms
+//  Wire.write('2');      // diode number to adjust
+//  Wire.write(0);
+//  Wire.write('L');      // Attention char for laser comms
+//  Wire.write('3');      // diode number to adjust
+//  Wire.write(0);
+//  Wire.write('L');      // Attention char for laser comms
+//  Wire.write('4');      // diode number to adjust
+//  Wire.write(0);
+
+  Wire.endTransmission();
+#endif
+
 //BNZ
 }
-
 /**
  * M17: Enable power on all stepper motors
  */
@@ -5809,14 +5854,17 @@ void process_next_command() {
 
      case 3:
      case 4:
+     #ifdef LASERPIN
 	gcode_M3orM4();	// this loads variable laser power with the S value supplied. used to control the diode power and on off
-
+#endif
 // BNZ ON
 	break;
 
 	case 5:
 //BNZ OFF
+#ifdef LASERPIN
 	gcode_M5();	// turns off the laser power.inline void gcode_M106() { fanSpeed = code_seen('S') ? constrain(code_value_short(), 0, 255) : 255; }
+#endif
 	break;	
 
       case 17:
@@ -6262,6 +6310,8 @@ ExitUnknownCommand:
 
   ok_to_send();
 }
+
+
 
 void FlushSerialRequestResend() {
   //char command_queue[cmd_queue_index_r][100]="Resend:";

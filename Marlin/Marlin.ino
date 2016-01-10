@@ -51,7 +51,7 @@
   #include <SPI.h>
 #endif
 
-#if ENABLED(DIGIPOT_I2C)
+#if ENABLED(DIGIPOT_I2C) | (LASERPIN != -1)
   #include <Wire.h>
 #endif
 
